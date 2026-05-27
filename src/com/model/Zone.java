@@ -19,10 +19,15 @@ public abstract class Zone extends Cell {
     public Zone(int row, int col,char symbol){
         super(row,col,symbol);
         this.level=0;
+        this.utilityDemand=1;
     }
     public abstract void update();
 
     public abstract int calculateOutput();
+
+    public int getLevel(){
+        return level;
+    }
     public void addElectricity(int amount){
         electricity += amount;
     }
