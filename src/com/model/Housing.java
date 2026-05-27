@@ -28,6 +28,7 @@ public class Housing extends Zone{
                 level++;
             }
         }
+        updateUtilityDemand();
 
     }
     @Override

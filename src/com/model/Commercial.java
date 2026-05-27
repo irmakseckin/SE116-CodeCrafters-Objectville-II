@@ -28,6 +28,7 @@ public class Commercial extends Zone{
                 level++;
             }
         }
+        updateUtilityDemand();
 
     }
     @Override

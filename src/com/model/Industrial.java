@@ -27,6 +27,7 @@ public class Industrial extends Zone {
                 level++;
             }
         }
+        updateUtilityDemand();
 
     }
     @Override
