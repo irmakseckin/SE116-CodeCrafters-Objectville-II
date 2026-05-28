@@ -29,6 +29,7 @@ public class Main {
 
             char[][] grid = new char[rows][cols];
 
+
             for (int i = 0; i < rows; i++) {
                 String currentLine = lines.get(i);
 
@@ -37,7 +38,6 @@ public class Main {
 
                 }
             }
-
 
         }catch(IOException e){
             System.out.println("Cannot read the file.");
