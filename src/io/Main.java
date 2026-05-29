@@ -1,4 +1,5 @@
 package io;
+import com.model.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -28,6 +29,7 @@ public class Main {
 
 
             char[][] grid = new char[rows][cols];
+            Cell[][] cellGrid = new Cell[rows][cols];
 
 
             for (int i = 0; i < rows; i++) {
@@ -38,6 +40,75 @@ public class Main {
 
                 }
             }
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+
+                    char c = grid[i][j];
+
+                    switch (c) {
+
+                        case 'E':
+                            cellGrid[i][j] = new Empty(i, j);
+                            break;
+
+                        case 'H':
+                            cellGrid[i][j] = new Housing(i, j);
+                            break;
+
+                        case 'I':
+                            cellGrid[i][j] = new Industrial(i, j);
+                            break;
+
+                        case 'C':
+                            cellGrid[i][j] = new Commercial(i, j);
+                            break;
+
+                        case 'P':
+                            cellGrid[i][j] = new PowerPlant(i, j);
+                            break;
+
+                        case 'W':
+                            cellGrid[i][j] = new WaterPump(i, j);
+                            break;
+
+                        case 'T':
+                            cellGrid[i][j] = new InternetHub(i, j);
+                            break;
+
+                        case 'F':
+                            cellGrid[i][j] = new PoliceStation(i, j);
+                            break;
+
+                        case 'D':
+                            cellGrid[i][j] = new Hospital(i, j);
+                            break;
+
+                        case 'S':
+                            cellGrid[i][j] = new School(i, j);
+                            break;
+
+                        case 'R':
+                            cellGrid[i][j] = new Road(i, j);
+                            break;
+
+                        default:
+                            cellGrid[i][j] = new Empty(i, j);
+                            break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    System.out.print(cellGrid[i][j].getSymbol() + " ");
+                }
+                System.out.println();
+            }
+
+
+
+
 
         }catch(IOException e){
             System.out.println("Cannot read the file.");
