@@ -1,5 +1,6 @@
 package io;
 import com.model.*;
+import com.exception.BadMapException;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -93,8 +94,7 @@ public class Main {
                             break;
 
                         default:
-                            cellGrid[i][j] = new Empty(i, j);
-                            break;
+                            throw new BadMapException("Invalid map character: " + c + " at (" + i + "," + j + ")");
                     }
                 }
             }
@@ -105,8 +105,6 @@ public class Main {
                 }
                 System.out.println();
             }
-
-
 
 
 
