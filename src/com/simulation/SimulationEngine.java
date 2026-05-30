@@ -16,6 +16,7 @@ public class SimulationEngine {
             System.out.println("Tick " + tick);
             resetZones();
             distributeServices();
+            updateZones();
         }
     }
 
@@ -100,6 +101,16 @@ public class SimulationEngine {
     }
 
     public void updateZones(){
+        for(int row=0; row<grid.length; row++){
+            for(int col=0; col<grid[row].length;col++){
+                char symbol = grid[row][col].getSymbol();
+
+                if(symbol == 'H' || symbol == 'I' || symbol == 'C'){
+                    Zone zone = (Zone)grid[row][col];
+                    zone.update();
+                }
+            }
+        }
 
     }
 
