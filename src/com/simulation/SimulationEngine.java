@@ -27,6 +27,8 @@ public class SimulationEngine {
             distributeResources();
             updateZones();
             collectProduction();
+            printGrid();
+            System.out.println();
         }
     }
 
@@ -297,6 +299,23 @@ public class SimulationEngine {
             }
         }
 
+    }
+
+    public void printGrid(){
+        for(int row=0; row<grid.length; row++){
+            for(int col=0; col<grid[row].length; col++){
+
+                char symbol=grid[row][col].getSymbol();
+
+                if(symbol == 'H' || symbol == 'I' || symbol == 'C'){
+                    Zone zone=(Zone) grid[row][col];
+                    System.out.print(symbol + "(" + zone.getLevel() + ") ");
+                }else{
+                    System.out.print(symbol + " ");
+                }
+            }
+            System.out.println();
+        }
     }
 
 }
