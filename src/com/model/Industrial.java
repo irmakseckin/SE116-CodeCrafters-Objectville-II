@@ -10,6 +10,8 @@ public class Industrial extends Zone {
     }
     @Override
     public void update(){
+        int oldLevel = level;
+
         if(electricity == 0 || water == 0 ||availablePopulation == 0){
             level=0;
         }
@@ -26,6 +28,12 @@ public class Industrial extends Zone {
             if (level<1){
                 level++;
             }
+        }
+        if( level > oldLevel){
+            System.out.println("Industrial at (" + row + ", " + col + ") levels up from " + oldLevel + "to " + level);
+        }
+        else if (level < oldLevel){
+            System.out.println("Industrial at (" + row + "," + col + ") levels down from" + oldLevel + "to " +level);
         }
         updateUtilityDemand();
 

@@ -12,6 +12,8 @@ public class Commercial extends Zone{
     }
     @Override
     public void update(){
+        int oldLevel = level;
+
         if(electricity == 0 || water == 0 || internet == 0|| availablePopulation == 0 || availableGoods ==0){
             level =0;
         } else if (security && availablePopulation > 0  && availableGoods >0) {
@@ -27,6 +29,13 @@ public class Commercial extends Zone{
             if (level < 1){
                 level++;
             }
+        }
+        if(level > oldLevel){
+            System.out.println("Commercial at (" + row + "," + col + ") levels up from " + oldLevel + "to " + level);
+        }
+        else if (level < oldLevel){
+            System.out.println("Commercial at (" + row + "," + col + ") levels down from " + oldLevel + "to " + level);
+
         }
         updateUtilityDemand();
 

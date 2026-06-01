@@ -11,6 +11,8 @@ public class Housing extends Zone{
 
     @Override
     public void update(){
+        int oldLevel = level;
+
         if(electricity == 0 || water == 0 || internet == 0){
             level=0;
         } else if (security && health&& education && lifestyleReceived > 0 ){
@@ -27,6 +29,12 @@ public class Housing extends Zone{
             if(level < 1){
                 level++;
             }
+        }
+        if(level > oldLevel){
+            System.out.println("Housing at (" + row + "," + col + ") levels up from" + oldLevel + " to " + level);
+        } else if (level < oldLevel) {
+            System.out.println("Housing at (" + row + "," + col + ") levels down from" + oldLevel + " to " + level);
+
         }
         updateUtilityDemand();
 
