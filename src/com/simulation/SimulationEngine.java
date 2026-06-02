@@ -27,7 +27,6 @@ public class SimulationEngine {
             distributeResources();
             updateZones();
             collectProduction();
-            printGrid();
             System.out.println();
         }
     }
@@ -77,7 +76,7 @@ public class SimulationEngine {
                     int colDistance;
 
                     if(service.getCol()>col){
-                        colDistance =  service.getCol()-col;
+                        colDistance = service.getCol()-col;
                     }else{
                         colDistance = col-service.getCol();
                     }
@@ -89,20 +88,25 @@ public class SimulationEngine {
 
                         if(service.getSymbol()== 'F'){
                             zone.setSecurity(true);
+                            System.out.println(getZoneName(zone) + " at (" + row + "," + col + ") received security service");
                         }
+
                         if (service.getSymbol()== 'D'){
                             zone.setHealth(true);
+                            System.out.println(getZoneName(zone) + " at (" + row + "," + col + ") received health service");
                         }
+
                         if(service.getSymbol()=='S'){
                             zone.setEducation(true);
+                            System.out.println(getZoneName(zone) + " at (" + row + "," + col + ") received education service");
                         }
                     }
-
                 }
             }
         }
-
     }
+
+
 
     public void distributeUtilities(){
         for(int row=0; row< grid.length; row++){
@@ -145,12 +149,15 @@ public class SimulationEngine {
         }
         if(utility.getSymbol()=='P'){
             currentZone.addElectricity(givenAmount);
-        }
+            System.out.println(getZoneName(currentZone) + " at (" + currentZone.getRow() + "," + currentZone.getCol() + ") received " + givenAmount + " electricity");
+          }
         if(utility.getSymbol()=='T'){
             currentZone.addInternet(givenAmount);
+            System.out.println(getZoneName(currentZone) + " at (" + currentZone.getRow() + "," + currentZone.getCol() + ") received " + givenAmount + " internet");
         }
         if(utility.getSymbol()=='W'){
             currentZone.addWater(givenAmount);
+            System.out.println(getZoneName(currentZone) + " at (" + currentZone.getRow() + "," + currentZone.getCol() + ") received " + givenAmount + " water");
         }
         utilityAmount=utilityAmount-givenAmount;
           }
@@ -241,15 +248,31 @@ public class SimulationEngine {
                 if (symbol == 'I'){
                     Industrial industrial=(Industrial) grid[row][col];
                     industrial.setAvailablePopulation(populationAmount);
+
+                    if(populationAmount > 0){
+                        System.out.println("Industrial at (" + row + "," + col + ") received " + populationAmount + " population");
                     }
+                }
                 if(symbol == 'C'){
                     Commercial commercial= (Commercial) grid[row][col];
                     commercial.setAvailableGoods(goodsAmount);
                     commercial.setAvailablePopulation(populationAmount);
+
+                    if(populationAmount > 0){
+                        System.out.println("Commercial at (" + row + "," + col + ") received " + populationAmount + " population");
+                    }
+
+                    if(goodsAmount > 0){
+                        System.out.println("Commercial at (" + row + "," + col + ") received " + goodsAmount + " goods");
+                    }
                 }
                 if(symbol == 'H'){
                     Housing housing=(Housing) grid[row][col];
                     housing.setLifestyleReceived(lifestyleAmount);
+
+                    if(lifestyleAmount > 0){
+                        System.out.println("House at (" + row + "," + col + ") received " + lifestyleAmount + " lifestyle");
+                    }
                 }
 
             }
@@ -273,49 +296,62 @@ public class SimulationEngine {
 
     }
 
-    public void collectProduction(){
-        totalPopulation=0;
-        totalGoods=0;
-        totalLifestyle=0;
+public void collectProduction(){
+    totalPopulation=0;
+    totalGoods=0;
+    totalLifestyle=0;
 
-        for(int row=0; row< grid.length; row++){
-            for(int col=0; col<grid[row].length; col++){
-                char symbol = grid[row][col].getSymbol();
+    for(int row=0; row< grid.length; row++){
+        for(int col=0; col<grid[row].length; col++){
+            char symbol = grid[row][col].getSymbol();
 
-                if (symbol == 'H'){
-                    Housing housing=(Housing) grid[row][col];
-                    totalPopulation+=housing.calculateOutput();
+            if (symbol == 'H'){
+                Housing housing=(Housing) grid[row][col];
+                int output = housing.calculateOutput();
+                totalPopulation += output;
+
+                if(output > 0){
+                    System.out.println("House at (" + row + "," + col + ") generated " + output + " population");
                 }
+            }
 
-                if(symbol == 'I'){
-                    Industrial industrial=(Industrial) grid[row][col];
-                    totalGoods+=industrial.calculateOutput();
+            if(symbol == 'I'){
+                Industrial industrial=(Industrial) grid[row][col];
+                int output = industrial.calculateOutput();
+                totalGoods += output;
+
+                if(output > 0){
+                    System.out.println("Industrial at (" + row + "," + col + ") generated " + output + " goods");
                 }
+            }
 
-                if(symbol == 'C'){
-                    Commercial commercial=(Commercial) grid[row][col];
-                    totalLifestyle+=commercial.calculateOutput();
+            if(symbol == 'C'){
+                Commercial commercial=(Commercial) grid[row][col];
+                int output = commercial.calculateOutput();
+                totalLifestyle += output;
+
+                if(output > 0){
+                    System.out.println("Commercial at (" + row + "," + col + ") generated " + output + " lifestyle");
                 }
             }
         }
+    }
+}
+public String getZoneName(Zone zone){
 
+      if(zone.getSymbol() == 'H'){
+        return "House";
     }
 
-    public void printGrid(){
-        for(int row=0; row<grid.length; row++){
-            for(int col=0; col<grid[row].length; col++){
-
-                char symbol=grid[row][col].getSymbol();
-
-                if(symbol == 'H' || symbol == 'I' || symbol == 'C'){
-                    Zone zone=(Zone) grid[row][col];
-                    System.out.print(symbol + "(" + zone.getLevel() + ") ");
-                }else{
-                    System.out.print(symbol + " ");
-                }
-            }
-            System.out.println();
-        }
+      if(zone.getSymbol() == 'I'){
+        return "Industrial";
     }
+
+      if(zone.getSymbol() == 'C'){
+        return "Commercial";
+    }
+
+    return "Zone";
+}
 
 }
