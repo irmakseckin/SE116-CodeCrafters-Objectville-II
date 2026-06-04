@@ -1,6 +1,7 @@
 package io;
 import com.model.*;
 import com.exception.BadMapException;
+import com.simulation.SimulationEngine;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -22,7 +23,6 @@ public class Main {
             while((line = br.readLine()) != null){
 
                 lines.add(line);
-
             }
 
             int rows = lines.size();
@@ -99,14 +99,8 @@ public class Main {
                 }
             }
 
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    System.out.print(cellGrid[i][j].getSymbol() + " ");
-                }
-                System.out.println();
-            }
-
-
+            SimulationEngine engine = new SimulationEngine(cellGrid);
+            engine.run(10);
 
         }catch(IOException e){
             System.out.println("Cannot read the file.");
