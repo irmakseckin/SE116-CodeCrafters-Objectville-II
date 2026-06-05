@@ -11,10 +11,20 @@ public class Main {
 
         try {
 
+            int tickCount = 10;
+
+            if(args.length > 0){
+                tickCount = Integer.parseInt(args[0]);
+            }
+
             Cell[][] cellGrid = MapLoader.load();
 
             SimulationEngine engine = new SimulationEngine(cellGrid);
-            engine.run(10);
+            engine.run(tickCount);
+
+        } catch (NumberFormatException e) {
+            System.out.println("Tick count must be an integer.");
+
 
         } catch (IOException e) {
             System.out.println("Cannot read the file.");
