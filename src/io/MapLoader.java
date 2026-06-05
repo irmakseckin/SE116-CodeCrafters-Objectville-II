@@ -10,11 +10,11 @@ import java.util.ArrayList;
 
 public class MapLoader {
 
-    public static Cell[][] load() throws IOException {
+    public static Cell[][] load(String fileName) throws IOException {
 
         ArrayList<String> lines = new ArrayList<>();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("map00.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
 
             String line;
 
